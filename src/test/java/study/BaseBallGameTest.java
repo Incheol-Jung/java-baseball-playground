@@ -20,7 +20,6 @@ public class BaseBallGameTest {
 		private List<Integer> userNumbers = new ArrayList<>();
 		private Integer ballCount = 0;
 		private Integer strikeCount = 0;
-		private List<Integer> resultIndexes = new ArrayList<>();
 
 		public List<Integer> getSystemNumbers() {
 			return systemNumbers;
