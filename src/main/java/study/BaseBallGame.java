@@ -28,7 +28,9 @@ public class BaseBallGame {
 		return this.userNumbers;
 	}
 
-	public void setUserNumbers(List<Integer> numbers) {
-		this.userNumbers = numbers;
+	public void addUserNumber(int i) {
+		if (!this.userNumbers.contains(i)) {
+			this.userNumbers.add(i);
+		}
 	}
 }

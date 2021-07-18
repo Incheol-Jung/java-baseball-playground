@@ -34,9 +34,24 @@ public class BaseBallGameTest {
 	@Test
 	void 사용자에게_숫자_입력을_받는다() {
 		// when
-		baseBallGame.setUserNumbers(Arrays.asList(1, 2, 3));
+		baseBallGame.addUserNumber(1);
+		baseBallGame.addUserNumber(1);
+		baseBallGame.addUserNumber(1);
+		
 		// then
 		assertThat(baseBallGame.getUserNumbers().size() > 0).isTrue();
+	}
+
+	@Test
+	void 숫자는_중복되면_안된다() {
+		// when
+		baseBallGame.addUserNumber(1);
+		baseBallGame.addUserNumber(2);
+		baseBallGame.addUserNumber(3);
+		baseBallGame.addUserNumber(3);
+		
+		// then
+		assertThat(baseBallGame.getUserNumbers().stream().distinct().count() == 3).isTrue();
 	}
 
 }
