@@ -37,7 +37,7 @@ public class BaseBallGameTest {
 		baseBallGame.addUserNumber(1);
 		baseBallGame.addUserNumber(1);
 		baseBallGame.addUserNumber(1);
-		
+
 		// then
 		assertThat(baseBallGame.getUserNumbers().size() > 0).isTrue();
 	}
@@ -49,9 +49,15 @@ public class BaseBallGameTest {
 		baseBallGame.addUserNumber(2);
 		baseBallGame.addUserNumber(3);
 		baseBallGame.addUserNumber(3);
-		
+
 		// then
 		assertThat(baseBallGame.getUserNumbers().stream().distinct().count() == 3).isTrue();
+	}
+
+	@Test
+	void 숫자는_0_9_이내만_가능하다() {
+		// when
+		assertThatThrownBy(() -> baseBallGame.addUserNumber(11)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

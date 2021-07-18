@@ -15,8 +15,16 @@ public class BaseBallGame {
 	}
 
 	private void addNumbers(Integer number) {
+		validateNumbers(number);
+		
 		if (!systemNumbers.contains(number)) {
 			systemNumbers.add(number);
+		}
+	}
+
+	private void validateNumbers(Integer number) {
+		if (number < 0 || number > 9) {
+			throw new IllegalArgumentException("유효하지 않은 값입니다.");
 		}
 	}
 
@@ -28,9 +36,11 @@ public class BaseBallGame {
 		return this.userNumbers;
 	}
 
-	public void addUserNumber(int i) {
-		if (!this.userNumbers.contains(i)) {
-			this.userNumbers.add(i);
+	public void addUserNumber(int number) {
+		validateNumbers(number);
+		
+		if (!userNumbers.contains(number)) {
+			userNumbers.add(number);
 		}
 	}
 }
