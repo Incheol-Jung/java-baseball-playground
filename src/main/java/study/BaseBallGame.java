@@ -5,11 +5,18 @@ import java.util.List;
 
 public class BaseBallGame {
 	private final List<Integer> systemNumbers = new ArrayList<>();
-	
+
 	public void initGame() {
-		systemNumbers.add(1);
-		systemNumbers.add(2);
-		systemNumbers.add(3);
+		while (systemNumbers.size() < 3) {
+			Integer number = (int)((Math.random() * 100) % 9 + 1);
+			addNumbers(number);
+		}
+	}
+
+	private void addNumbers(Integer number) {
+		if (!systemNumbers.contains(number)) {
+			systemNumbers.add(number);
+		}
 	}
 
 	public List<Integer> getSystemNumbers() {
