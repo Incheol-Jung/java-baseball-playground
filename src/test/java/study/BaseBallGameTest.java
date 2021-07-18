@@ -72,5 +72,18 @@ public class BaseBallGameTest {
 		// then
 		assertThat(status).isEqualTo(BallStatus.STRIKE);
 	}
+	
+	@Test
+	void 다른_자리에_있으면_볼() {
+		// given
+		baseBallGame.setSystemNumbers(Arrays.asList(new Ball(1, 1), new Ball(2, 2), new Ball(3, 3)));
+		baseBallGame.addUserNumber(new Ball(2, 1));
+
+		// when
+		BallStatus status = baseBallGame.play();
+
+		// then
+		assertThat(status).isEqualTo(BallStatus.BALL);
+	}
 
 }

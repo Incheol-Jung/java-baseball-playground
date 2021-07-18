@@ -8,15 +8,15 @@ public class BaseBallGame {
 	private List<Ball> userNumbers = new ArrayList<>();
 
 	public void initGame() {
-		for (int i=0; systemNumbers.size() < 3; i++) {
+		for (int i = 0; systemNumbers.size() < 3; i++) {
 			Integer value = (int)((Math.random() * 100) % 9 + 1);
-			addNumbers(new Ball(i+1, value));
+			addNumbers(new Ball(i + 1, value));
 		}
 	}
 
 	private void addNumbers(Ball ball) {
 		validateNumbers(ball);
-		
+
 		if (!systemNumbers.contains(ball)) {
 			systemNumbers.add(ball);
 		}
@@ -38,7 +38,7 @@ public class BaseBallGame {
 
 	public void addUserNumber(Ball ball) {
 		validateNumbers(ball);
-		
+
 		if (!userNumbers.contains(ball)) {
 			userNumbers.add(ball);
 		}
@@ -49,6 +49,21 @@ public class BaseBallGame {
 	}
 
 	public BallStatus play() {
-		return BallStatus.STRIKE;
+		return this.systemNumbers.stream()
+			.map(ball -> compareBall(ball, userNumbers.get(0)))
+			.findFirst()
+			.orElse(BallStatus.NOTHING);
+	}
+
+	private BallStatus compareBall(Ball systemBall, Ball userBall) {
+		if (systemBall.equals(userBall)) {
+			return BallStatus.STRIKE;
+		}
+
+		if (systemBall.getValue() == userBall.getValue()) {
+			return BallStatus.BALL;
+		}
+
+		return BallStatus.NOTHING;
 	}
 }
