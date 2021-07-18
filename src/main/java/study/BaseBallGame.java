@@ -4,43 +4,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseBallGame {
-	private final List<Integer> systemNumbers = new ArrayList<>();
-	private List<Integer> userNumbers = new ArrayList<>();
+	private List<Ball> systemNumbers = new ArrayList<>();
+	private List<Ball> userNumbers = new ArrayList<>();
 
 	public void initGame() {
-		while (systemNumbers.size() < 3) {
-			Integer number = (int)((Math.random() * 100) % 9 + 1);
-			addNumbers(number);
+		for (int i=0; systemNumbers.size() < 3; i++) {
+			Integer value = (int)((Math.random() * 100) % 9 + 1);
+			addNumbers(new Ball(i+1, value));
 		}
 	}
 
-	private void addNumbers(Integer number) {
-		validateNumbers(number);
+	private void addNumbers(Ball ball) {
+		validateNumbers(ball);
 		
-		if (!systemNumbers.contains(number)) {
-			systemNumbers.add(number);
+		if (!systemNumbers.contains(ball)) {
+			systemNumbers.add(ball);
 		}
 	}
 
-	private void validateNumbers(Integer number) {
-		if (number < 0 || number > 9) {
+	private void validateNumbers(Ball ball) {
+		if (ball.getValue() < 0 || ball.getValue() > 9) {
 			throw new IllegalArgumentException("유효하지 않은 값입니다.");
 		}
 	}
 
-	public List<Integer> getSystemNumbers() {
+	public List<Ball> getSystemNumbers() {
 		return this.systemNumbers;
 	}
 
-	public List<Integer> getUserNumbers() {
+	public List<Ball> getUserNumbers() {
 		return this.userNumbers;
 	}
 
-	public void addUserNumber(int number) {
-		validateNumbers(number);
+	public void addUserNumber(Ball ball) {
+		validateNumbers(ball);
 		
-		if (!userNumbers.contains(number)) {
-			userNumbers.add(number);
+		if (!userNumbers.contains(ball)) {
+			userNumbers.add(ball);
 		}
+	}
+
+	public void setSystemNumbers(List<Ball> numbers) {
+		this.systemNumbers = numbers;
+	}
+
+	public BallStatus play() {
+		return BallStatus.STRIKE;
 	}
 }
