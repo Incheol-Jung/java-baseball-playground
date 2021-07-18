@@ -86,4 +86,17 @@ public class BaseBallGameTest {
 		assertThat(status).isEqualTo(BallStatus.BALL);
 	}
 
+	@Test
+	void 같은_수가_전혀_없으면_낫싱() {
+		// given
+		baseBallGame.setSystemNumbers(Arrays.asList(new Ball(1, 1), new Ball(2, 2), new Ball(3, 3)));
+		baseBallGame.addUserNumber(new Ball(1, 4));
+
+		// when
+		BallStatus status = baseBallGame.play();
+
+		// then
+		assertThat(status).isEqualTo(BallStatus.NOTHING);
+	}
+
 }
