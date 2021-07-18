@@ -5,6 +5,7 @@ import java.util.List;
 
 public class BaseBallGame {
 	private final List<Integer> systemNumbers = new ArrayList<>();
+	private List<Integer> userNumbers = new ArrayList<>();
 
 	public void initGame() {
 		while (systemNumbers.size() < 3) {
@@ -21,5 +22,13 @@ public class BaseBallGame {
 
 	public List<Integer> getSystemNumbers() {
 		return this.systemNumbers;
+	}
+
+	public List<Integer> getUserNumbers() {
+		return this.userNumbers;
+	}
+
+	public void setUserNumbers(List<Integer> numbers) {
+		this.userNumbers = numbers;
 	}
 }
