@@ -105,4 +105,17 @@ public class BaseBallGame {
 	private int getStrikeCount() {
 		return this.strikeCount;
 	}
+
+	public String print() {
+		String result = "낫싱";
+		if (getStrikeCount() > 0 || getBallCount() > 0) {
+			return String.format("%d 볼, %d 스트라이크", ballCount, strikeCount);
+		}
+
+		return result;
+	}
+
+	private int getBallCount() {
+		return this.ballCount;
+	}
 }

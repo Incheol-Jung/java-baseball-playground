@@ -115,4 +115,20 @@ public class BaseBallGameTest {
 		assertThat(isEnd).isTrue();
 	}
 
+	@Test
+	void 투볼_투스트라이크() {
+		// given
+		baseBallGame.setSystemNumbers(Arrays.asList(new Ball(1, 1), new Ball(2, 2), new Ball(3, 3)));
+		baseBallGame.setUserNumber(Arrays.asList(new Ball(1, 1), new Ball(2, 3), new Ball(3, 2)));
+
+		// when
+		baseBallGame.play();
+		boolean isEnd = baseBallGame.isEnd();
+		String result = baseBallGame.print();
+
+		// then
+		assertThat(isEnd).isFalse();
+		assertThat(result).isEqualTo("2 볼, 1 스트라이크");
+	}
+
 }
