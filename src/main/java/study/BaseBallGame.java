@@ -1,13 +1,42 @@
 package study;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class BaseBallGame {
 	private List<Ball> systemNumbers = new ArrayList<>();
 	private List<Ball> userNumbers = new ArrayList<>();
 	private int strikeCount;
 	private int ballCount;
+
+	public static void main(String[] args) {
+		BaseBallGame baseBallGame = new BaseBallGame();
+		baseBallGame.initGame();
+		Scanner sc = new Scanner(System.in);
+		boolean isContinue = true;
+
+		while (isContinue) {
+			baseBallGame.initialize();
+			System.out.println("세 개의 숫자를 입력하세요.");
+			for (int i = 0; i < 3; i++) {
+				System.out.println("숫자를 입력 해주세요.");
+				baseBallGame.addUserNumber(new Ball(i + 1, sc.nextInt()));
+			}
+
+			System.out.println("결과를 알려 드리겠습니다.");
+			baseBallGame.play();
+			isContinue = !baseBallGame.isEnd();
+			System.out.println(baseBallGame.print());
+		}
+	}
+
+	private void initialize() {
+		this.ballCount = 0;
+		this.strikeCount = 0;
+		this.userNumbers = new ArrayList<>();
+	}
 
 	public void initGame() {
 		for (int i = 0; systemNumbers.size() < 3; i++) {
@@ -109,7 +138,7 @@ public class BaseBallGame {
 	public String print() {
 		String result = "낫싱";
 		if (getStrikeCount() > 0 || getBallCount() > 0) {
-			return String.format("%d 볼, %d 스트라이크", ballCount, strikeCount);
+			return String.format("%d 볼, %d 스트라이크", getBallCount(), getStrikeCount());
 		}
 
 		return result;
