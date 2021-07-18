@@ -34,9 +34,9 @@ public class BaseBallGameTest {
 	@Test
 	void 사용자에게_숫자_입력을_받는다() {
 		// when
-		baseBallGame.addUserNumber(new Ball(1,1));
-		baseBallGame.addUserNumber(new Ball(2,1));
-		baseBallGame.addUserNumber(new Ball(3,1));
+		baseBallGame.addUserNumber(new Ball(1, 1));
+		baseBallGame.addUserNumber(new Ball(2, 1));
+		baseBallGame.addUserNumber(new Ball(3, 1));
 
 		// then
 		assertThat(baseBallGame.getUserNumbers().size() > 0).isTrue();
@@ -45,19 +45,21 @@ public class BaseBallGameTest {
 	@Test
 	void 숫자는_중복되면_안된다() {
 		// when
-		baseBallGame.addUserNumber(new Ball(1,1));
-		baseBallGame.addUserNumber(new Ball(2,2));
-		baseBallGame.addUserNumber(new Ball(3,3));
-		baseBallGame.addUserNumber(new Ball(4,3));
+		baseBallGame.addUserNumber(new Ball(1, 1));
+		baseBallGame.addUserNumber(new Ball(2, 2));
+		baseBallGame.addUserNumber(new Ball(3, 3));
+		baseBallGame.addUserNumber(new Ball(4, 3));
 
 		// then
-		assertThat(baseBallGame.getUserNumbers().stream().map(ball -> ball.getValue()).distinct().count() == 3).isTrue();
+		assertThat(
+			baseBallGame.getUserNumbers().stream().map(ball -> ball.getValue()).distinct().count() == 3).isTrue();
 	}
 
 	@Test
 	void 숫자는_0_9_이내만_가능하다() {
 		// when
-		assertThatThrownBy(() -> baseBallGame.addUserNumber(new Ball(1, 11))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> baseBallGame.addUserNumber(new Ball(1, 11))).isInstanceOf(
+			IllegalArgumentException.class);
 	}
 
 	@Test
@@ -67,12 +69,12 @@ public class BaseBallGameTest {
 		baseBallGame.addUserNumber(new Ball(1, 1));
 
 		// when
-		BallStatus status = baseBallGame.play();
+		BallStatus status = baseBallGame.singlePlay(0);
 
 		// then
 		assertThat(status).isEqualTo(BallStatus.STRIKE);
 	}
-	
+
 	@Test
 	void 다른_자리에_있으면_볼() {
 		// given
@@ -80,7 +82,7 @@ public class BaseBallGameTest {
 		baseBallGame.addUserNumber(new Ball(2, 1));
 
 		// when
-		BallStatus status = baseBallGame.play();
+		BallStatus status = baseBallGame.singlePlay(0);
 
 		// then
 		assertThat(status).isEqualTo(BallStatus.BALL);
@@ -93,10 +95,24 @@ public class BaseBallGameTest {
 		baseBallGame.addUserNumber(new Ball(1, 4));
 
 		// when
-		BallStatus status = baseBallGame.play();
+		BallStatus status = baseBallGame.singlePlay(0);
 
 		// then
 		assertThat(status).isEqualTo(BallStatus.NOTHING);
+	}
+
+	@Test
+	void 컴퓨터가_선택한_숫자를_모두_맞히면_게임이_종료된다() {
+		// given
+		baseBallGame.setSystemNumbers(Arrays.asList(new Ball(1, 1), new Ball(2, 2), new Ball(3, 3)));
+		baseBallGame.setUserNumber(Arrays.asList(new Ball(1, 1), new Ball(2, 2), new Ball(3, 3)));
+
+		// when
+		baseBallGame.play();
+		boolean isEnd = baseBallGame.isEnd();
+
+		// then
+		assertThat(isEnd).isTrue();
 	}
 
 }

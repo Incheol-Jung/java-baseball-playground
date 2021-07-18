@@ -6,6 +6,8 @@ import java.util.List;
 public class BaseBallGame {
 	private List<Ball> systemNumbers = new ArrayList<>();
 	private List<Ball> userNumbers = new ArrayList<>();
+	private int strikeCount;
+	private int ballCount;
 
 	public void initGame() {
 		for (int i = 0; systemNumbers.size() < 3; i++) {
@@ -48,14 +50,39 @@ public class BaseBallGame {
 		this.systemNumbers = numbers;
 	}
 
-	public BallStatus play() {
+	public BallStatus singlePlay(int index) {
 		return this.systemNumbers.stream()
-			.map(ball -> compareBall(ball, userNumbers.get(0)))
+			.map(ball -> getBallStatus(ball, userNumbers.get(index)))
+			.filter(status -> status.isBall() || status.isStrike())
 			.findFirst()
 			.orElse(BallStatus.NOTHING);
 	}
 
-	private BallStatus compareBall(Ball systemBall, Ball userBall) {
+	public void play() {
+		for (int index = 0; index < userNumbers.size(); index++) {
+			report(singlePlay(index));
+		}
+	}
+
+	private void report(BallStatus ballStatus) {
+		if (ballStatus.isStrike()) {
+			increaseStrikeCount();
+		}
+
+		if (ballStatus.isBall()) {
+			increaseBallCount();
+		}
+	}
+
+	private void increaseBallCount() {
+		this.ballCount++;
+	}
+
+	private void increaseStrikeCount() {
+		this.strikeCount++;
+	}
+
+	private BallStatus getBallStatus(Ball systemBall, Ball userBall) {
 		if (systemBall.equals(userBall)) {
 			return BallStatus.STRIKE;
 		}
@@ -65,5 +92,17 @@ public class BaseBallGame {
 		}
 
 		return BallStatus.NOTHING;
+	}
+
+	public void setUserNumber(List<Ball> balls) {
+		this.userNumbers = balls;
+	}
+
+	public boolean isEnd() {
+		return this.getStrikeCount() == 3;
+	}
+
+	private int getStrikeCount() {
+		return this.strikeCount;
 	}
 }
